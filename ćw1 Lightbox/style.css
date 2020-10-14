@@ -1,3 +1,7 @@
+.galeria img{
+    width:25%;
+    height: 25%;
+}
 .lightbox {
     position: absolute;
     top: 0;
@@ -22,8 +26,3 @@
     max-width: 80%;
     max-height: 80%;
 }
-/* .lewo img {
-    width: 10%;
-    height:10%;
-    display: block;
-} */
