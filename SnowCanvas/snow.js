@@ -4,6 +4,11 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
+window.addEventListener('resize', function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
 function Snowflake(x, y, yy, radius){
     this.x = x;
     this.y = y;
@@ -31,11 +36,11 @@ function Snowflake(x, y, yy, radius){
 
 let snowflakeArray = [];
 
-for(let i = 0; i < 100; i++){
+for(let i = 0; i < 20; i++){
     let radius = 5;
     let x = Math.random() * window.innerWidth;
     let y = 1;
-    let yy = 1;
+    let yy = Math.floor(Math.random() * 20)+1;
     snowflakeArray.push(new Snowflake(x, y, yy, radius));
 }
 
