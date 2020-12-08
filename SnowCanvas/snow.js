@@ -4,15 +4,19 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext('2d');
 
+let speedArray = [
+    '1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9','1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','1.9'
+];
+
 window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
 
-function Snowflake(x, y, yy, radius){
+function Snowflake(x, y, speed, radius){
     this.x = x;
     this.y = y;
-    this.yy = yy;
+    this.speed = speed;
     this.radius = radius;
     
     this.draw = function() {
@@ -25,10 +29,10 @@ function Snowflake(x, y, yy, radius){
     this.update = function(){
         if(this.y > innerHeight){
             this.x = Math.random() * window.innerWidth;
-            this.y = this.yy;
+            this.y = this.speed;
         }
 
-        this.y += this.yy;
+        this.y += this.speed;
 
         this.draw();
     };
@@ -36,12 +40,12 @@ function Snowflake(x, y, yy, radius){
 
 let snowflakeArray = [];
 
-for(let i = 0; i < 20; i++){
-    let radius = 5;
+for(let i = 0; i < 100; i++){
+    let radius = Math.floor(Math.random() * 5)+1;
     let x = Math.random() * window.innerWidth;
-    let y = 1;
-    let yy = Math.floor(Math.random() * 20)+1;
-    snowflakeArray.push(new Snowflake(x, y, yy, radius));
+    let y = 0;
+    let speed = Math.random()*speedArray[i];
+    snowflakeArray.push(new Snowflake(x, y, speed, radius));
 }
 
 
