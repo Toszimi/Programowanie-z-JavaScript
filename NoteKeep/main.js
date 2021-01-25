@@ -3,7 +3,9 @@ const lsKey = 'notes';
 function saveNoteInLocalStorage (note) {
     notes.push(note);
     localStorage.setItem(lsKey, JSON.stringify(notes));
+    mappedNotes = notes;
 }
+
 // notatka: title, content, colour, pinned, createDate
 const notes = [];
 
@@ -20,36 +22,28 @@ localStorage.setItem(lsKey, JSON.stringify(notes));
 const notesFromLocalStorage = JSON.parse(localStorage.getItem(lsKey));
 console.log(notesFromLocalStorage);
 
-const mappedNotes = notesFromLocalStorage.map(note => {
-    note.createDate = new Date(note.createDate);
-    return note;
-});
+let mappedNotes = notesFromLocalStorage;
 
 // 3. modyfkowanie struktury htmla
 const notesContainer = document.querySelector('main');
-const addNoteButton = document.querySelector('#dodajNotatke');
-addNoteButton.addEventListener('click', ()=>{
+//const addNoteButton = document.querySelector('#dodajNotatke');
+document.querySelector('#dodajNotatke').addEventListener('click', onNewNote);
+
+
+function onNewNote(){
+    const title = document.querySelector('#note1').value;
+    const content = document.querySelector('#note2').value;
+   
+    saveNoteInLocalStorage(({
+        note,
+    }));
+    
     for(const note of mappedNotes){
         const htmlNote = document.createElement('section');
         const htmlTitle = document.createElement('h1');
         const htmlContent = document.createElement('p');
         const htmlDate = document.createElement('h4');
         const htmlRemoveBtn = document.createElement('button');
-        // const htmlRed = document.createElement('red');
-        // const htmlPurple = document.createElement('purple');
-        // const htmlPink = document.createElement('pink');
-        // const htmlBlue = document.createElement('blue');
-        // const htmlCyan = document.createElement('cyan');
-        // const htmlGreen = document.createElement('green');
-
-        // htmlRed.addEventListener('click', colorChoose);
-        // htmlPurple.addEventListener('click', colorChoose);
-        // htmlPink.addEventListener('click', colorChoose);
-        // htmlBlue.addEventListener('click', colorChoose);
-        // htmlCyan.addEventListener('click', colorChoose);
-        // htmlGreen.addEventListener('click', colorChoose);
-     
-
         htmlTitle.innerHTML = note.title;
         htmlContent.innerHTML = note.content;
         htmlDate.innerHTML = note.createDate.toLocaleString();
@@ -67,13 +61,4 @@ addNoteButton.addEventListener('click', ()=>{
 
         notesContainer.appendChild(htmlNote);
     }
-});
-// pobieranie danych z inputów
-document.querySelector('#dodajNotatke').addEventListener('click', onNewNote);
-
-function onNewNote(){
-    const title = document.querySelector('#note1').value;
-    const content = document.querySelector('#note2').value;
-    console.log(title, content);
-    saveNoteInLocalStorage();
 }
