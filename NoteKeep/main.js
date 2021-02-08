@@ -1,64 +1,70 @@
+/* eslint-disable no-inner-declarations */
 const lsKey = 'notes';
-// 1. zapisywanie notatki i tablicy notatek w localStorage
-function saveNoteInLocalStorage (note) {
-    notes.push(note);
-    localStorage.setItem(lsKey, JSON.stringify(notes));
-    mappedNotes = notes;
-}
-
-// notatka: title, content, colour, pinned, createDate
-const notes = [];
-
-const note = {
-    title: '',
-    content: '',
-    colour: '',
-    pinned: false,
-    createDate: new Date()
-};
-notes.push(note); //moze wywalac blad
-localStorage.setItem(lsKey, JSON.stringify(notes));
-// 2. wczytywanie z localStorage
-const notesFromLocalStorage = JSON.parse(localStorage.getItem(lsKey));
-console.log(notesFromLocalStorage);
-
-let mappedNotes = notesFromLocalStorage;
-
-// 3. modyfkowanie struktury htmla
+let notes = [];
 const notesContainer = document.querySelector('main');
-//const addNoteButton = document.querySelector('#dodajNotatke');
 document.querySelector('#dodajNotatke').addEventListener('click', onNewNote);
 
-
-function onNewNote(){
+function onNewNote() {
     const title = document.querySelector('#note1').value;
     const content = document.querySelector('#note2').value;
-   
-    saveNoteInLocalStorage(({
-        note,
-    }));
-    
-    for(const note of mappedNotes){
-        const htmlNote = document.createElement('section');
-        const htmlTitle = document.createElement('h1');
-        const htmlContent = document.createElement('p');
-        const htmlDate = document.createElement('h4');
-        const htmlRemoveBtn = document.createElement('button');
-        htmlTitle.innerHTML = note.title;
-        htmlContent.innerHTML = note.content;
-        htmlDate.innerHTML = note.createDate.toLocaleString();
-        htmlRemoveBtn.innerHTML = 'usuń';
+    window.clickTime = notes.length;
+    const note = {
+        id: window.clickTime,
+        title: title,
+        content: content,
+        colour: '',
+        pinned: false,
+        createDate: new Date(),
+    };
 
-        htmlRemoveBtn.addEventListener('click', () =>{
-            notesContainer.removeChild(htmlNote);
-        });
+    notes.push(note);
+    localStorage.setItem(lsKey, JSON.stringify(notes));
+    window.location.reload();
+}
 
-        htmlNote.classList.add('note');
-        htmlNote.appendChild(htmlTitle);
-        htmlNote.appendChild(htmlContent);
-        htmlNote.appendChild(htmlDate);
-        htmlNote.appendChild(htmlRemoveBtn);
+const notesFromLocalStorage = JSON.parse(localStorage.getItem(lsKey));
 
-        notesContainer.appendChild(htmlNote);
+notes = notesFromLocalStorage.map((note) => {
+    note.createDate = new Date(note.createDate);
+    return note;
+});
+
+
+for (const note of notes) {
+    const htmlNote = document.createElement('section');
+    const htmlTitle = document.createElement('h1');
+    const htmlContent = document.createElement('p');
+    const htmlDate = document.createElement('h4');
+    const htmlRemoveBtn = document.createElement('button');
+    const htmlId = document.createElement('h5');
+    htmlId.innerHTML = note.id;
+    htmlTitle.innerHTML = note.title;
+    htmlContent.innerHTML = note.content;
+    htmlDate.innerHTML = note.createDate.toLocaleString();
+    htmlRemoveBtn.innerHTML = 'usuń';
+
+    htmlRemoveBtn.addEventListener('click', (ev) => {
+        const target = ev.currentTarget;
+        const parent = target.parentElement;
+        const parentParent = parent.parentElement;
+        const main = document.querySelector('main');
+        let index = Array.prototype.indexOf.call(parentParent.children, parent);
+        removeLocalStorage(index);
+        main.removeChild(parent);
+        window.location.reload();
+
+    });
+    function removeLocalStorage(index) {
+        notesFromLocalStorage.splice(index, 1);
+        localStorage.setItem(lsKey, JSON.stringify(notesFromLocalStorage));
     }
+    htmlNote.classList.add('note');
+    htmlId.classList.add('niewidok');
+    htmlNote.appendChild(htmlId);
+    htmlNote.appendChild(htmlTitle);
+    htmlNote.appendChild(htmlContent);
+    htmlNote.appendChild(htmlDate);
+    htmlNote.appendChild(htmlRemoveBtn);
+
+    notesContainer.appendChild(htmlNote);
 }
