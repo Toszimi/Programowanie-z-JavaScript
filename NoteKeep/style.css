@@ -37,42 +37,44 @@ font-size: 25px;
     font-size: 18px;
 }
 .red, .green, .purple, .pink, .blue, .cyan{
-height: 50px;
-width: 50px;
-border: 1px solid black;
-position: absolute;
-border-radius: 50%;
-}
-.red{
-    background-color: red;
-    right:8%;
-    top :42%;
-}
-.purple{
-    background-color: purple;
-    right:8%;
-    top :62%;
-}
-.blue{
-    background-color: blue;
-    right:8%;
-    top :82%;
-}
-.green{
-    background-color: rgb(11, 97, 11);
-    right:2%;
-    top :42%;
-}
-.pink{
-    background-color: pink;
-    right:2%;
-    top :62%;
-}
-.cyan{
-    background-color: cyan;
-    right:2%;
-    top :82%;
-}
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    }
+    .red{
+        background-color: red;
+        right:80px;
+        top :20px;
+    }
+    .purple{
+        background-color: purple;
+        right:80px;
+        top :85px;
+    }
+    .blue{
+        background-color: blue;
+        right:80px;
+        top :150px;
+    }
+    .green{
+        background-color: rgb(11, 97, 11);
+        right:2px;
+        top :20px;
+    }
+    .pink{
+        background-color: pink;
+        right:2px;
+        top :85px;
+    }
+    .cyan{
+        background-color: cyan;
+        right:2px;
+        top :150px;
+    }
+
 .titleNote, .contentNote{
     position: absolute;
     left: 1%;
@@ -90,6 +92,6 @@ border-radius: 50%;
 }
 .note{
     float: left;
-    border: 1px solid red;
+    border: 1px solid transparent;
     margin: 10px;
 }
