@@ -7,11 +7,15 @@ let holeX = 0;
 let holeY = 0;
 let speedX = 0;
 let speedY = 0;
+let startTime = 0;
+let startID = 0;
+
 
 ball.style.visibility = 'hidden';
 hole.style.visibility = 'hidden';
 const nav = document.getElementById('nav');
 document.getElementById('buttonGameStart').addEventListener('click', gameStart);
+let buttonGameReset = document.getElementById('buttonGameReset').addEventListener('click', stopwatchReset);
 
 
 function gameStart() {
@@ -23,6 +27,31 @@ function gameStart() {
     ball.style.visibility = 'visible';
     hole.style.visibility = 'visible';
     startingCords();
+    stopwatchTimer();
+    stopwatchStart();
+}
+
+function stopwatchTimer() {
+    startTime++;
+    document.getElementById('time').innerHTML = startTime;
+}
+
+function stopwatchStart() {
+    if (startID == 0) {
+        startID = setInterval(stopwatchTimer, 1000);
+    }
+}
+function stopwatchStop() {
+    if (startID != -1) {
+        clearInterval(startID);
+        startID = -1;
+    }
+}
+
+function stopwatchReset() {
+    stop();
+    startTime = -1;
+    stopwatchTimer();
 }
 
 function phoneAngle(event) {
@@ -63,5 +92,6 @@ function Move() {
         document.getElementById('buttonGameStart').style.borderRadius = '0%';
         ball.style.visibility = 'hidden';
         hole.style.visibility = 'hidden';
+        stopwatchStop();
     }
 }
